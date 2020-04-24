@@ -1,3 +1,7 @@
+// File by Shubham Khandelwal;
+/*
+An operating system works
+*/
 // reader-writer synchronization problem with reader priority
 //gcc -o rw rw.c -lpthread    <-- in Linux
 //gcc rw.c -o rw -lpthread -std=gnu90     <---in termux 
