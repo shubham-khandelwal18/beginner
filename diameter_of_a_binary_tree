@@ -1,0 +1,43 @@
+// Binary tree's Diameter
+// Leetcode interview problem
+// Diamter of a binary tree
+// Link: https://leetcode.com/explore/challenge/card/30-day-leetcoding-challenge/529/week-2/3293/
+// We will recursively find diamter of the node and depth of all the childerns
+/*
+          1
+         / \
+        2   3
+       / \     
+      4   5    
+  For node 4,5 and 3 their childern will return {0,0}
+  for all of these nodes;
+  Diamter=max(Diamter of left child,Diameter of right child,depth of left child+depth of right child }
+  Depth=max(Depth of left child,Depth of right child)+1
+  */
+  Below is the source code
+  /**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+typedef int ll;
+class Solution {
+    pair<ll,ll> dfs(TreeNode *root){
+        if(root==NULL){
+            return {0,0};
+        }
+        pair<ll,ll>left,right;
+        left=dfs(root->left);
+        right=dfs(root->right);
+        ll diameter=max({left.first,right.first,left.second+right.second});
+        return {diameter,max(left.second,right.second)+1};
+    }
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        return dfs(root).first;
+    }
+};
