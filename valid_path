@@ -1,0 +1,56 @@
+// My algorithm for Grid Dp
+//Problem valid path from amazon interview problems
+typedef long long int ll;
+string Solution::solve(int x, int y, int n, int r, vector<int>&row, vector<int> &col) {
+    bool dp[x+1][y+1];
+    memset(dp,true,sizeof(dp));
+    ll i,j,k;
+    for(i=0;i<=x;i++){
+        for(j=0;j<=y;j++){
+            for(k=0;k<n;k++){
+                if(pow(row[k]-i,2)+pow(col[k]-j,2)<=r*r){
+                    dp[i][j]=false;
+                    break;
+                }
+            }
+        }
+    }
+    //We need to figure a way so we can reach from o,o to x,y
+    // This can be easily implemented by bfs/dfs
+    // We need to write displacements
+    ll dx[8]={1,1,1,0,0,-1,-1,-1};
+    ll dy[8]={1,-1,0,1,-1,1,0,-1};
+    bool vis[x+1][y+1];
+    memset(vis,false,sizeof(dp));
+    queue<pair<ll,ll>>q;
+    if(dp[0][0]){
+        q.push(make_pair(0,0));
+        vis[0][0]=true;
+    }
+    while(!q.empty()){
+        ll t1,t2,t3,t4;
+        pair<ll,ll>p;
+        p=q.front();
+        q.pop();
+        t1=p.first;
+        t2=p.second;
+        for(i=0;i<8;i++){
+            t3=t1+dx[i];
+            t4=t2+dy[i];
+            if(t3>=0 && t3<=x && t4>=0 && t4<=y){
+                if(!vis[t3][t4] && dp[t3][t4]==true){
+                    vis[t3][t4]=true;
+                    q.push(make_pair(t3,t4));
+                }
+            }
+        }
+    }
+    string sp;
+    if(vis[x][y]){
+        sp="YES";
+    }
+    else{
+        sp="NO";
+    }
+    return sp;
+}
