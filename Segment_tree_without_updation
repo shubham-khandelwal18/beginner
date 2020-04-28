@@ -1,0 +1,53 @@
+/* Segment Tree implementation 
+ For Range Minimum Query
+ Without Updation
+ */
+#include<bits/stdc++.h>
+using namespace std;
+#define FIO ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0)
+#define mod 1000000007
+#define test ll tx; tx=1; while(tx--)
+typedef long long int ll;
+ll ar[100001],st[400004];
+void build(ll si,ll ss,ll se){
+    if(ss==se){
+        st[si]=ar[ss];
+    }
+    else{
+    ll sm;
+    sm=ss+se;
+    sm/=2;
+    build(2*si,ss,sm);
+    build(2*si+1,sm+1,se);
+    st[si]=min(st[2*si],st[2*si+1]);
+    }
+}
+ll query(ll si,ll ss,ll se,ll qs,ll qe){
+    if(ss>qe || se<qs){
+        return mod;
+    }
+    if(ss>=qs && se<=qe){
+        return st[si];
+    }
+    ll sm;
+    sm=ss+se;
+    sm/=2;
+    return min(query(2*si,ss,sm,qs,qe),query(2*si+1,sm+1,se,qs,qe));
+}
+int main() {
+    FIO;
+    test{
+        ll n,q,l,r;
+        cin>>n;
+        for(ll i=1;i<=n;i++){
+            cin>>ar[i];
+        }
+        build(1,1,n);
+        cin>>q;
+        while(q--){
+            cin>>l>>r;
+            cout<<query(1,1,n,l+1,r+1)<<endl;
+        }
+    }
+	return 0;
+}
